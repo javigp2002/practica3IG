@@ -246,7 +246,6 @@ class _excavadora : public _triangulos3D {
 // piezas AMETRALLADORA CIRCULAR
 //************************************************************************
 
-
 //************************************************************************
 // cañon
 //************************************************************************
@@ -270,11 +269,11 @@ class _canon : public _triangulos3D {
   float fondo;
   float radio;
 
-
   float an = 1;
   float al = 1.5;
   float f = 1;
   float r = 0.45;
+
  protected:
   _cilindro cilindro, canonSmall, rotationModule, embellecedor;
 };
