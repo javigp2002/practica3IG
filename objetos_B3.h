@@ -344,15 +344,15 @@ class _ametralladora : public _triangulos3D {
 
   void draw(_modo modo, float r, float g, float b, float grosor);
 
-  float giro_cabina;
-  float giro_primer_brazo;
-  float giro_segundo_brazo;
+  float giro_canion;
+  float giro_base;
+  float giro_base_up;
   float giro_pala;
 
-  float giro_primer_brazo_max;
-  float giro_primer_brazo_min;
-  float giro_segundo_brazo_max;
-  float giro_segundo_brazo_min;
+  float giro_base_max;
+  float giro_base_min;
+  float giro_base_up_max;
+  float giro_base_up_min;
   float giro_pala_max;
   float giro_pala_min;
 

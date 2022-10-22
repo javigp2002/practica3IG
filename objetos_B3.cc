@@ -1174,13 +1174,16 @@ void _sustentacionAmetralladora::draw(_modo modo, float r, float g, float b,
 //************************************************************************
 
 _ametralladora::_ametralladora() {
-  giro_cabina = 0.0;
-  giro_primer_brazo = 0.0;
-  giro_primer_brazo_max = 0;
-  giro_primer_brazo_min = -90;
-  giro_segundo_brazo = 0.0;
-  giro_segundo_brazo_max = 30;
-  giro_segundo_brazo_min = 0;
+  giro_canion = 0.0;
+  giro_base = 0.0;
+  giro_base_up = 0.0;
+  
+  giro_base_max = 20;
+  giro_base_min = -20;
+
+  giro_base_up_max = 45;
+  giro_base_up_min = -45;
+  
   giro_pala = 0.0;
   giro_pala_max = 50.0;
   giro_pala_min = -90.0;
@@ -1197,19 +1200,21 @@ void _ametralladora::draw(_modo modo, float r, float g, float b, float grosor) {
   sustentacion.draw(modo, r, g, b, grosor);
 
   glPopMatrix();
+
+
   glPushMatrix();
 
+  glRotatef(giro_base, 1, 0, 0);
+  glRotatef(giro_base_up, 0, 1, 0);
+  housing.draw(modo, r, g, b, grosor);
+
+
+  // glScalef(1, 1, 0.7);
   glTranslatef(0, 0, 3.1);
-  // glScalef(0.5, 0.5, 0.5);
+  glRotatef(giro_canion, 0, 0,1);
   canon.draw(modo, r, g, b, grosor);
 
-  glPopMatrix();
-
-  glPushMatrix();
-
-  // glTranslatef(0, 3, 0);
-  // glScalef(0.5, 0.5, 0.5);
-  housing.draw(modo, r, g, b, grosor);
+   
 
   glPopMatrix();
 };

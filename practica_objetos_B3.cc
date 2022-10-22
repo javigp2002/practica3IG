@@ -287,31 +287,70 @@ void special_key(int Tecla1, int x, int y) {
       Observer_distance /= 1.2;
       break;
 
+    // case GLUT_KEY_F1:
+    //   excavadora.giro_cabina += 5;
+    //   break;
+    // case GLUT_KEY_F2:
+    //   excavadora.giro_cabina -= 5;
+    //   break;
+    // case GLUT_KEY_F3:
+    //   excavadora.giro_primer_brazo += 1;
+    //   if (excavadora.giro_primer_brazo > excavadora.giro_primer_brazo_max)
+    //     excavadora.giro_primer_brazo = excavadora.giro_primer_brazo_max;
+    //   break;
+    // case GLUT_KEY_F4:
+    //   excavadora.giro_primer_brazo -= 1;
+    //   if (excavadora.giro_primer_brazo < excavadora.giro_primer_brazo_min)
+    //     excavadora.giro_primer_brazo = excavadora.giro_primer_brazo_min;
+    //   break;
+    // case GLUT_KEY_F5:
+    //   excavadora.giro_segundo_brazo += 1;
+    //   if (excavadora.giro_segundo_brazo > excavadora.giro_segundo_brazo_max)
+    //     excavadora.giro_segundo_brazo = excavadora.giro_segundo_brazo_max;
+    //   break;
+    // case GLUT_KEY_F6:
+    //   excavadora.giro_segundo_brazo -= 1;
+    //   if (excavadora.giro_segundo_brazo < excavadora.giro_segundo_brazo_min)
+    //     excavadora.giro_segundo_brazo = excavadora.giro_segundo_brazo_min;
+    //   break;
+    // case GLUT_KEY_F7:
+    //   excavadora.giro_pala += 1;
+    //   if (excavadora.giro_pala > excavadora.giro_pala_max)
+    //     excavadora.giro_pala = excavadora.giro_pala_max;
+    //   break;
+    // case GLUT_KEY_F8:
+    //   excavadora.giro_pala -= 1;
+    //   if (excavadora.giro_pala < excavadora.giro_pala_min)
+    //     excavadora.giro_pala = excavadora.giro_pala_min;
+    //   break;
+
+
     case GLUT_KEY_F1:
-      excavadora.giro_cabina += 5;
+      ametralladora.giro_canion += 5;
       break;
     case GLUT_KEY_F2:
-      excavadora.giro_cabina -= 5;
+      ametralladora.giro_canion -= 5;
       break;
-    case GLUT_KEY_F3:
-      excavadora.giro_primer_brazo += 1;
-      if (excavadora.giro_primer_brazo > excavadora.giro_primer_brazo_max)
-        excavadora.giro_primer_brazo = excavadora.giro_primer_brazo_max;
+
+     case GLUT_KEY_F3:
+      ametralladora.giro_base += 1;
+      if (ametralladora.giro_base  > ametralladora.giro_base_max)
+        ametralladora.giro_base  = ametralladora.giro_base_max;
       break;
     case GLUT_KEY_F4:
-      excavadora.giro_primer_brazo -= 1;
-      if (excavadora.giro_primer_brazo < excavadora.giro_primer_brazo_min)
-        excavadora.giro_primer_brazo = excavadora.giro_primer_brazo_min;
+      ametralladora.giro_base  -= 1;
+      if (ametralladora.giro_base  < ametralladora.giro_base_min)
+        ametralladora.giro_base  = ametralladora.giro_base_min;
       break;
     case GLUT_KEY_F5:
-      excavadora.giro_segundo_brazo += 1;
-      if (excavadora.giro_segundo_brazo > excavadora.giro_segundo_brazo_max)
-        excavadora.giro_segundo_brazo = excavadora.giro_segundo_brazo_max;
+      ametralladora.giro_base_up += 1;
+      if (ametralladora.giro_base_up > ametralladora.giro_base_up_max)
+        ametralladora.giro_base_up = ametralladora.giro_base_up_max;
       break;
     case GLUT_KEY_F6:
-      excavadora.giro_segundo_brazo -= 1;
-      if (excavadora.giro_segundo_brazo < excavadora.giro_segundo_brazo_min)
-        excavadora.giro_segundo_brazo = excavadora.giro_segundo_brazo_min;
+      ametralladora.giro_base_up -= 1;
+      if (ametralladora.giro_base_up < ametralladora.giro_base_up_min)
+        ametralladora.giro_base_up =  ametralladora.giro_base_min;
       break;
     case GLUT_KEY_F7:
       excavadora.giro_pala += 1;
@@ -323,6 +362,8 @@ void special_key(int Tecla1, int x, int y) {
       if (excavadora.giro_pala < excavadora.giro_pala_min)
         excavadora.giro_pala = excavadora.giro_pala_min;
       break;
+
+    
   }
 
   glutPostRedisplay();
