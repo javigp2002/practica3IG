@@ -108,8 +108,8 @@ static int RADIOCILINDRO = 1;
 
 class _cilindro : public _rotacion {
  public:
-  _cilindro(float radio = ALTURACILINDRO, float altura = ALTURACILINDRO, int num = 20, int tapa_in = 1,
-            int tapa_su = 1);
+  _cilindro(float radio = ALTURACILINDRO, float altura = ALTURACILINDRO,
+            int num = 20, int tapa_in = 1, int tapa_su = 1);
 };
 
 //*************************************************************************
@@ -246,6 +246,7 @@ class _excavadora : public _triangulos3D {
 // piezas AMETRALLADORA CIRCULAR
 //************************************************************************
 
+
 //************************************************************************
 // cañon
 //************************************************************************
@@ -257,19 +258,60 @@ class _canon : public _triangulos3D {
   void draw(_modo modo, float r, float g, float b, float grosor);
   void introduceSmallCanon(float posX, float posY, float posZ, _modo modo,
                            float r, float g, float b, float grosor);
-  void introduceEmbellecedor(float posX, float posY, float posZ, float radio, float alto, _modo modo,
-                           float r, float g, float b, float grosor);
-  void introduceRotationModule(float posX, float posY, float posZ, float radio, float alto, _modo modo,
-                           float r, float g, float b, float grosor);
+  void introduceEmbellecedor(float posX, float posY, float posZ, float radio,
+                             float alto, _modo modo, float r, float g, float b,
+                             float grosor);
+  void introduceRotationModule(float posX, float posY, float posZ, float radio,
+                               float alto, _modo modo, float r, float g,
+                               float b, float grosor);
 
   float ancho;
   float alto;
   float fondo;
   float radio;
 
+
+  float an = 1;
+  float al = 1.5;
+  float f = 1;
+  float r = 0.45;
  protected:
-  _cilindro cilindro, 
-  canonSmall, rotationModule, embellecedor;
+  _cilindro cilindro, canonSmall, rotationModule, embellecedor;
+};
+
+//************************************************************************
+// housing
+//************************************************************************
+
+class _housing : public _triangulos3D {
+ public:
+  _housing();
+
+  void draw(_modo modo, float r, float g, float b, float grosor);
+  void introduceAgarre(float posX, float posY, float posZ, float radio,
+                       float alto, _modo modo, float r, float g, float b,
+                       float grosor, bool rotate = true);
+  void introduceEmbellecedor(float posX, float posY, float posZ, float ancho,
+                             float alto, float fondo, _modo modo, float r,
+                             float g, float b, float grosor);
+  void introduceRotationModule(float posX, float posY, float posZ, float radio,
+                               float alto, _modo modo, float r, float g,
+                               float b, float grosor, bool rotate = true);
+
+  float ancho;
+  float alto;
+  float fondo;
+  float radio;
+
+  float an = 1;
+  float al = 1.5;
+  float f = 1;
+  float r = 0.45;
+
+ protected:
+  _cilindro cilindro, canonSmall, rotationModule, embellecedor;
+  _cono cono;
+  _cubo cubo;
 };
 
 //************************************************************************
@@ -319,4 +361,5 @@ class _ametralladora : public _triangulos3D {
  protected:
   _canon canon;
   _sustentacionAmetralladora sustentacion;
+  _housing housing;
 };

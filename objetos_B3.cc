@@ -840,15 +840,17 @@ void _excavadora::draw(_modo modo, float r, float g, float b, float grosor) {
 //************************************************************************
 // piezas AMETRALLADORA
 //************************************************************************
+
 //************************************************************************
 // cañon
 //************************************************************************
 
 _canon::_canon() {
-  ancho = 1;
-  fondo = 1;
-  radio = 0.45;
-  alto = 1.5;
+  
+  ancho = an;
+  fondo = f;
+  radio = r;
+  alto = al;
 
   colors_chess(1.0, 1.0, 0.0, 0.0, 0.0, 1.0);
 }
@@ -868,8 +870,8 @@ void _canon::draw(_modo modo, float r, float g, float b, float grosor) {
   glPopMatrix();
 
   float radio2 = radio / 3;
-  float translacionEmbZ =  altoCilindros + ALTURACILINDRO * alto / 4 -
-          ALTURACILINDRO * alto / 48;
+  float translacionEmbZ =
+      altoCilindros + ALTURACILINDRO * alto / 4 - ALTURACILINDRO * alto / 48;
   float altoEmb = alto / 48;
 
   introduceEmbellecedor(0, 0, translacionEmbZ, radio2, altoEmb, modo, r, g, b,
@@ -877,24 +879,29 @@ void _canon::draw(_modo modo, float r, float g, float b, float grosor) {
 
   translacionEmbZ = altoCilindros + ALTURACILINDRO * alto / 8;
   introduceEmbellecedor(0, 0, translacionEmbZ, radio2, altoEmb, modo, r, g, b,
-                       grosor);
+                        grosor);
 
   translacionEmbZ = alto / 4 + ALTURACILINDRO * alto / 29;
   introduceEmbellecedor(0, 0, translacionEmbZ, radio2, altoEmb, modo, r, g, b,
-                       grosor);
+                        grosor);
 
-  translacionEmbZ=-0.3;
-  altoEmb = alto/16;
+  translacionEmbZ = -0.3;
+  altoEmb = alto / 16;
   introduceEmbellecedor(0, 0, translacionEmbZ, radio2, altoEmb, modo, r, g, b,
                         grosor);
 
-  float transRMZ = -9.5*alto/6;
+  float transRMZ = -9.5 * alto / 6;
   float altoRM = altoEmb;
 
   introduceRotationModule(0, 0, transRMZ, radio2, altoRM, modo, r, g, b,
-                        grosor);
+                          grosor);
 
-  float radio3 = radio / 8, transXNE = radio / 3.0;
+  // float transembellecedor = -2.1 * alto;
+  // float alto3 = altoEmb + 0.5;
+  // float radio3 = radio2 + 0.02;
+
+  // introduceRotationModule(0, 0, transembellecedor, radio3, alto3, modo, r, g, b,
+  //                         grosor);
   // canon
   float final = 3 * radio / 4, intermedio = radio / 2;
   introduceSmallCanon(final, 0, 0, modo, r, g, b, grosor);
@@ -908,7 +915,6 @@ void _canon::draw(_modo modo, float r, float g, float b, float grosor) {
 
   introduceSmallCanon(-intermedio, -intermedio, 0, modo, r, g, b, grosor);
   introduceSmallCanon(intermedio, -intermedio, 0, modo, r, g, b, grosor);
-  
 }
 
 void _canon::introduceSmallCanon(float posX, float posY, float posZ, _modo modo,
@@ -936,8 +942,8 @@ void _canon::introduceEmbellecedor(float posX, float posY, float posZ,
 }
 
 void _canon::introduceRotationModule(float posX, float posY, float posZ,
-                                   float radio, float alto, _modo modo, float r,
-                                   float g, float b, float grosor) {
+                                     float radio, float alto, _modo modo,
+                                     float r, float g, float b, float grosor) {
   glPushMatrix();
   glTranslatef(posX, posY, posZ);  // transladar de manera que quede bien
   glScalef(radio, radio, alto);
@@ -945,6 +951,144 @@ void _canon::introduceRotationModule(float posX, float posY, float posZ,
   rotationModule.draw(modo, r, g, b, grosor);
   glPopMatrix();
 }
+
+//************************************************************************
+// housing
+//************************************************************************
+// float an = 1;
+// float al = 1.5;
+// float f = 1;
+// float r = 0.45;
+_housing::_housing() {
+  ancho = 1;
+  fondo = 1;
+  radio = 0.45;
+  alto = 1.5;
+
+  colors_chess(1.0, 1.0, 0.0, 0.0, 0.0, 1.0);
+}
+
+void _housing::draw(_modo modo, float r, float g, float b, float grosor) {
+  // Todos estos vienen "heredados del cañon"
+
+  float altoEmb = alto / 48;
+  float radio2 = radio / 3;
+  float transembellecedor = -2.1 * alto;
+  float alto3 = altoEmb + 0.5;
+  float radio3 = radio2 + 0.02;
+
+  transembellecedor = -2.1 * alto;
+  radio3 = radio2 + 0.02;
+
+  // base
+  introduceRotationModule(0, 0, 0, radio3, alto3, modo, r, g, b, grosor);
+ 
+
+  // trasera base
+   float transZ3_1 = -alto / 2 - 0.08;
+  float alto3_1 = 1.5/ 64; // 1.5 = al
+  introduceRotationModule(0, 0, transZ3_1, radio2, alto3_1, modo, r, g, b,
+                          grosor);
+
+  float posX = 0, posY = 0, posZ = transZ3_1+alto3_1;
+  glPushMatrix();
+  glTranslatef(posX, posY, posZ);  // transladar de manera que quede bien
+  glScalef(radio, radio, alto);
+  glRotatef(270, 1, 0, 0);
+
+  cono = _cono(r/2, 0.2, 20);
+  cono.draw(modo, r, g, b, grosor);
+  glPopMatrix();
+
+  float transZ3_2 = 1.5 * transZ3_1;
+  float radio3_2 = 0.02;
+  float alto3_2 = alto/8;
+  introduceRotationModule(0, 0, transZ3_2, radio3_2, alto3_2, modo, r, g, b,
+                          grosor);
+  // tubo cargador
+
+  float radio4 = radio2 - 0.06;
+  float alto4 = alto / 3;
+  float transX = 3 * radio3;
+  float transY = 3 * radio3;
+  float transZ = -alto3;
+  introduceRotationModule(-transX, -transY, transZ, radio4, alto4, modo, r, g,
+                          b, grosor);
+
+  float radio4_1 = radio4 - 0.04;
+  float alto4_1 = alto4 / 6;
+  float transZ4_1 = transZ - 1.65 * alto3;
+
+  // trasera tubo cargador
+  introduceRotationModule(-transX, -transY, transZ4_1, radio4_1, alto4_1, modo,
+                          r, g, b, grosor);
+
+
+  //base mango
+  transZ = 4*alto3;
+  transY = 20* radio3;
+
+  float ancho = 1.5;
+  float alto = 0.15;
+  float largo = 0.3;
+
+  introduceEmbellecedor(0, transY, transZ, ancho, alto, largo, modo, r, g, b,
+                        grosor);
+
+  //partes mango
+  // transX = -1.2;
+  // transZ = 1 * alto3;
+  // transY = 7.2* radio3;
+
+  // float radio5 = 0.05;
+
+  // introduceRotationModule(transX, transY, transZ, radio5, alto, modo, r, g, b,
+  //                       grosor, false);
+
+}
+
+  void _housing::introduceAgarre(float posX, float posY, float posZ, float radio, float alto, _modo modo,
+                           float r, float g, float b, float grosor, bool rotate){
+
+  glPushMatrix();
+  
+  glTranslatef(posX, posY, posZ);  // transladar de manera que quede bien
+ 
+  if (rotate)glRotatef(90, 1, 0, 0);
+  cilindro.draw(modo, r, g, b, grosor);
+  glPopMatrix();
+                           }
+
+
+void _housing::introduceRotationModule(float posX, float posY, float posZ,
+                                       float radio, float alto, _modo modo,
+                                       float r, float g, float b,
+                                       float grosor, bool rotate) {
+  glPushMatrix();
+  glTranslatef(posX, posY, posZ);  // transladar de manera que quede bien
+   glScalef(radio, radio, alto);
+ 
+  if (rotate)glRotatef(90, 1, 0, 0);
+  cilindro.draw(modo, r, g, b, grosor);
+  glPopMatrix();
+}
+
+
+void _housing::introduceEmbellecedor(float posX, float posY, float posZ,
+                                       float ancho, float alto, float fondo, _modo modo,
+                                       float r, float g, float b,
+                                       float grosor) {
+  glPushMatrix();
+  glScalef(ancho, alto, fondo);
+  glTranslatef(posX , posY, posZ);
+  cubo.draw(modo, r, g, b, grosor);
+  glPopMatrix();
+}
+
+
+
+
+
 
 //************************************************************************
 // sustentación
@@ -1046,17 +1190,26 @@ _ametralladora::_ametralladora() {
 
 void _ametralladora::draw(_modo modo, float r, float g, float b, float grosor) {
   glPushMatrix();
+  float ajusteScale = 0.5;
+  glScalef(ajusteScale, ajusteScale, ajusteScale);
+  glTranslatef(0, -4, 0);
 
-  // glTranslatef(0, 0, 0);
-
-  //sustentacion.draw(modo, r, g, b, grosor);
+  sustentacion.draw(modo, r, g, b, grosor);
 
   glPopMatrix();
   glPushMatrix();
 
-  //glTranslatef(0, 3, 0);
-  //glScalef(0.5, 0.5, 0.5);
+  glTranslatef(0, 0, 3.1);
+  // glScalef(0.5, 0.5, 0.5);
   canon.draw(modo, r, g, b, grosor);
+
+  glPopMatrix();
+
+  glPushMatrix();
+
+  // glTranslatef(0, 3, 0);
+  // glScalef(0.5, 0.5, 0.5);
+  housing.draw(modo, r, g, b, grosor);
 
   glPopMatrix();
 };
