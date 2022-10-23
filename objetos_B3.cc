@@ -6,6 +6,25 @@
 
 #include "file_ply_stl.hpp"
 
+
+
+void introduceCilindro(float posX, float posY, float posZ,
+                                       float radio, float alto, _modo modo,
+                                       float r, float g, float b, float grosor,
+                                       bool rotate=true) {
+  _cilindro cilindro;
+  glPushMatrix();
+  glTranslatef(posX, posY, posZ);  // transladar de manera que quede bien
+  glScalef(radio, radio, alto);
+
+  if (rotate) glRotatef(90, 1, 0, 0);
+  cilindro.draw(modo, r, g, b, grosor);
+  glPopMatrix();
+}
+
+
+
+
 //*************************************************************************
 // _puntos3D
 //*************************************************************************
@@ -895,13 +914,12 @@ void _canon::draw(_modo modo, float r, float g, float b, float grosor) {
   introduceRotationModule(0, 0, transRMZ, radio2, altoRM, modo, r, g, b,
                           grosor);
 
-  // float transembellecedor = -2.1 * alto;
-  // float alto3 = altoEmb + 0.5;
-  // float radio3 = radio2 + 0.02;
+  float transembellecedor = -2.1 * alto;
+  float alto3 = altoEmb + 0.5;
+  float radio3 = radio2 + 0.02;
 
-  // introduceRotationModule(0, 0, transembellecedor, radio3, alto3, modo, r, g,
-  // b,
-  //                         grosor);
+  introduceCilindro(0, 0, transembellecedor, radio3, alto3, modo, r, g,
+  b,grosor);
   // canon
   float final = 3 * radio / 4, intermedio = radio / 2;
   introduceSmallCanon(final, 0, 0, modo, r, g, b, grosor);
@@ -1081,6 +1099,28 @@ void _housing::introduceEmbellecedor(float posX, float posY, float posZ,
   glPopMatrix();
 }
 
+
+//************************************************************************
+// Mirilla
+//************************************************************************
+
+_mirilla::_mirilla(){
+  ancho = an;
+  fondo = f;
+  radio = r;
+  alto = al;
+}
+
+
+
+void _mirilla::introduceMira(float posX, float posY, float posZ, float ancho, float alto,
+                 float fondo, _modo modo, float r, float g, float b,
+                 float grosor, bool rotate){
+
+
+
+}
+
 //************************************************************************
 // sustentación
 //************************************************************************
@@ -1204,4 +1244,9 @@ void _ametralladora::draw(_modo modo, float r, float g, float b, float grosor) {
   canon.draw(modo, r, g, b, grosor);
 
   glPopMatrix();
+
+  // glPushMatrix();
+  // canon.draw(modo, r, g, b, grosor);
+
+  // glPopMatrix();
 };

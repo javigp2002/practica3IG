@@ -314,6 +314,37 @@ class _housing : public _triangulos3D {
 };
 
 //************************************************************************
+// mirilla
+//************************************************************************
+
+class _mirilla : public _triangulos3D {
+ public:
+  _mirilla();
+
+  void draw(_modo modo, float r, float g, float b, float grosor);
+  void introduceCampana(float posX, float posY, float posZ, float radio,
+                       float alto, _modo modo, float r, float g, float b,
+                       float grosor, bool rotate = true);
+  void introduceMira(float posX, float posY, float posZ, float ancho, float alto,
+                 float fondo, _modo modo, float r, float g, float b,
+                 float grosor, bool rotate = true);
+
+  float ancho;
+  float alto;
+  float fondo;
+  float radio;
+
+  float an = 1;
+  float al = 1.5;
+  float f = 1;
+  float r = 0.45;
+
+ protected:
+  _cilindro campana;
+  _cubo mira;
+};
+
+//************************************************************************
 // sustentación
 //************************************************************************
 
@@ -362,3 +393,4 @@ class _ametralladora : public _triangulos3D {
   _sustentacionAmetralladora sustentacion;
   _housing housing;
 };
+
