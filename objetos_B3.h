@@ -23,7 +23,7 @@ class _puntos3D {
 
   vector<_vertex3f> vertices;
 };
-
+ 
 //*************************************************************************
 // clase triángulo
 //*************************************************************************
@@ -245,7 +245,43 @@ class _excavadora : public _triangulos3D {
 //************************************************************************
 // piezas AMETRALLADORA CIRCULAR
 //************************************************************************
+//************************************************************************
+// mirilla
+//************************************************************************
 
+class _mirilla : public _triangulos3D {
+ public:
+  _mirilla();
+
+  void draw(_modo modo, float r, float g, float b, float grosor);
+  
+  void introduceBase(float posX, float posY, float posZ, float ancho, float alto,
+                 float fondo, _modo modo, float r, float g, float b,
+                 float grosor, bool rotate = true);
+  void introduceMira(float posX, float posY, float posZ, float ancho, float alto,
+                 float fondo, _modo modo, float r, float g, float b,
+                 float grosor, bool rotate = true);
+  void introduceCampana(float posX, float posY, float posZ, float radio,
+                       float alto, _modo modo, float r, float g, float b,
+                       float grosor, bool rotate = true);
+  void introduceModRotatorio(float posX, float posY, float posZ, float radio,
+                       float alto, _modo modo, float r, float g, float b,
+                       float grosor, bool rotate = true);
+
+  float ancho;
+  float alto;
+  float fondo;
+  float radio;
+
+
+float an = 1;
+  float al = 1.5;
+  float f = 1;
+  float r = 0.45;
+ protected:
+  _cilindro campana, modRot;
+  _cubo mira;
+};
 //************************************************************************
 // cañon
 //************************************************************************
@@ -269,7 +305,7 @@ class _canon : public _triangulos3D {
   float fondo;
   float radio;
 
-  float an = 1;
+float an = 1;
   float al = 1.5;
   float f = 1;
   float r = 0.45;
@@ -286,7 +322,7 @@ class _housing : public _triangulos3D {
  public:
   _housing();
 
-  void draw(_modo modo, float r, float g, float b, float grosor);
+  void draw(_modo modo, float r, float g, float b, float grosor, float giro_mira=0.0);
   void introduceAgarre(float posX, float posY, float posZ, float radio,
                        float alto, _modo modo, float r, float g, float b,
                        float grosor, bool rotate = true);
@@ -302,47 +338,18 @@ class _housing : public _triangulos3D {
   float fondo;
   float radio;
 
-  float an = 1;
+float an = 1;
   float al = 1.5;
   float f = 1;
   float r = 0.45;
-
  protected:
   _cilindro cilindro, canonSmall, rotationModule, embellecedor;
   _cono cono;
   _cubo cubo;
+  _mirilla mira;
 };
 
-//************************************************************************
-// mirilla
-//************************************************************************
 
-class _mirilla : public _triangulos3D {
- public:
-  _mirilla();
-
-  void draw(_modo modo, float r, float g, float b, float grosor);
-  void introduceCampana(float posX, float posY, float posZ, float radio,
-                       float alto, _modo modo, float r, float g, float b,
-                       float grosor, bool rotate = true);
-  void introduceMira(float posX, float posY, float posZ, float ancho, float alto,
-                 float fondo, _modo modo, float r, float g, float b,
-                 float grosor, bool rotate = true);
-
-  float ancho;
-  float alto;
-  float fondo;
-  float radio;
-
-  float an = 1;
-  float al = 1.5;
-  float f = 1;
-  float r = 0.45;
-
- protected:
-  _cilindro campana;
-  _cubo mira;
-};
 
 //************************************************************************
 // sustentación
@@ -377,14 +384,17 @@ class _ametralladora : public _triangulos3D {
   float giro_canion;
   float giro_base;
   float giro_base_up;
-  float giro_pala;
+  
+ 
 
   float giro_base_max;
   float giro_base_min;
   float giro_base_up_max;
   float giro_base_up_min;
-  float giro_pala_max;
-  float giro_pala_min;
+  
+   float giro_mirilla;
+  float giro_mirilla_max;
+  float giro_mirilla_min;
 
   float tamanio_pala;
 
@@ -392,5 +402,5 @@ class _ametralladora : public _triangulos3D {
   _canon canon;
   _sustentacionAmetralladora sustentacion;
   _housing housing;
+  _mirilla mira;
 };
-

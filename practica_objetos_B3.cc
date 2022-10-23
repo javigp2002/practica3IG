@@ -354,14 +354,14 @@ void special_key(int Tecla1, int x, int y) {
         ametralladora.giro_base_up = ametralladora.giro_base_min;
       break;
     case GLUT_KEY_F7:
-      excavadora.giro_pala += 1;
-      if (excavadora.giro_pala > excavadora.giro_pala_max)
-        excavadora.giro_pala = excavadora.giro_pala_max;
+      ametralladora.giro_mirilla += 1;
+      if (ametralladora.giro_mirilla > ametralladora.giro_mirilla_max)
+        ametralladora.giro_mirilla = ametralladora.giro_mirilla_max;
       break;
     case GLUT_KEY_F8:
-      excavadora.giro_pala -= 1;
-      if (excavadora.giro_pala < excavadora.giro_pala_min)
-        excavadora.giro_pala = excavadora.giro_pala_min;
+      ametralladora.giro_mirilla -= 1;
+      if (ametralladora.giro_mirilla < ametralladora.giro_mirilla_min)
+        ametralladora.giro_mirilla = ametralladora.giro_mirilla_min;
       break;
   }
 

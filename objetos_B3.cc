@@ -6,25 +6,6 @@
 
 #include "file_ply_stl.hpp"
 
-
-
-void introduceCilindro(float posX, float posY, float posZ,
-                                       float radio, float alto, _modo modo,
-                                       float r, float g, float b, float grosor,
-                                       bool rotate=true) {
-  _cilindro cilindro;
-  glPushMatrix();
-  glTranslatef(posX, posY, posZ);  // transladar de manera que quede bien
-  glScalef(radio, radio, alto);
-
-  if (rotate) glRotatef(90, 1, 0, 0);
-  cilindro.draw(modo, r, g, b, grosor);
-  glPopMatrix();
-}
-
-
-
-
 //*************************************************************************
 // _puntos3D
 //*************************************************************************
@@ -204,7 +185,7 @@ void _triangulos3D::colors_random(int caras_iniciales) {
 //*************************************************************************
 
 void _triangulos3D::colors_random_personal() {
-  int i, n_c;
+  int n_c;
   n_c = caras.size();
   colores_caras.resize(n_c);
   srand(time(NULL));
@@ -914,12 +895,13 @@ void _canon::draw(_modo modo, float r, float g, float b, float grosor) {
   introduceRotationModule(0, 0, transRMZ, radio2, altoRM, modo, r, g, b,
                           grosor);
 
-  float transembellecedor = -2.1 * alto;
-  float alto3 = altoEmb + 0.5;
-  float radio3 = radio2 + 0.02;
+  // float transembellecedor = -2.1 * alto;
+  // float alto3 = altoEmb + 0.5;
+  // float radio3 = radio2 + 0.02;
 
-  introduceCilindro(0, 0, transembellecedor, radio3, alto3, modo, r, g,
-  b,grosor);
+  // introduceRotationModule(0, 0, transembellecedor, radio3, alto3, modo, r, g,
+  // b,
+  //                         grosor);
   // canon
   float final = 3 * radio / 4, intermedio = radio / 2;
   introduceSmallCanon(final, 0, 0, modo, r, g, b, grosor);
@@ -933,6 +915,8 @@ void _canon::draw(_modo modo, float r, float g, float b, float grosor) {
 
   introduceSmallCanon(-intermedio, -intermedio, 0, modo, r, g, b, grosor);
   introduceSmallCanon(intermedio, -intermedio, 0, modo, r, g, b, grosor);
+
+
 }
 
 void _canon::introduceSmallCanon(float posX, float posY, float posZ, _modo modo,
@@ -986,16 +970,16 @@ _housing::_housing() {
   colors_chess(1.0, 1.0, 0.0, 0.0, 0.0, 1.0);
 }
 
-void _housing::draw(_modo modo, float r, float g, float b, float grosor) {
+void _housing::draw(_modo modo, float r, float g, float b, float grosor, float giro_mira) {
   // Todos estos vienen "heredados del cañon"
 
   float altoEmb = alto / 48;
   float radio2 = radio / 3;
-  float transembellecedor = -2.1 * alto;
+  // float transembellecedor = -2.1 * alto;
   float alto3 = altoEmb + 0.5;
   float radio3 = radio2 + 0.02;
 
-  transembellecedor = -2.1 * alto;
+  // transembellecedor = -2.1 * alto;
   radio3 = radio2 + 0.02;
 
   // base
@@ -1061,6 +1045,17 @@ void _housing::draw(_modo modo, float r, float g, float b, float grosor) {
   // introduceRotationModule(transX, transY, transZ, radio5, alto, modo, r, g,
   // b,
   //                       grosor, false);
+
+  
+  glPushMatrix();
+  glScalef(0.5,0.5,0.5);
+  
+
+  glTranslatef(0,1.25,1.25); //pos final
+  glRotatef(giro_mira,1,0,0); // rotacion
+  glTranslatef(0,1.6,0); // mover punto del medio
+  mira.draw(modo, r, g, b, grosor);
+  glPopMatrix();
 }
 
 void _housing::introduceAgarre(float posX, float posY, float posZ, float radio,
@@ -1099,28 +1094,84 @@ void _housing::introduceEmbellecedor(float posX, float posY, float posZ,
   glPopMatrix();
 }
 
-
 //************************************************************************
 // Mirilla
 //************************************************************************
 
-_mirilla::_mirilla(){
+_mirilla::_mirilla() {
   ancho = an;
   fondo = f;
   radio = r;
   alto = al;
+
+  campana = _cilindro(RADIOCILINDRO, ALTURACILINDRO, 30, 0, 0);
+  modRot = _cilindro(RADIOCILINDRO, ALTURACILINDRO, 30, 1, 1);
+}
+
+void _mirilla::introduceMira(float posX, float posY, float posZ, float ancho,
+                             float alto, float fondo, _modo modo, float r,
+                             float g, float b, float grosor, bool rotate) {
+  glPushMatrix();
+  glScalef(ancho, alto, fondo);
+  glTranslatef(posX, posY, posZ);  // transladar de manera que quede bien
+  if (rotate) glRotatef(90, 1, 0, 0);
+  mira.draw(modo, r, g, b, grosor);
+  glPopMatrix();
+}
+
+void _mirilla::introduceBase(float posX, float posY, float posZ, float ancho,
+                             float alto, float fondo, _modo modo, float r,
+                             float g, float b, float grosor, bool rotate) {
+  introduceMira(posX, posY, posZ, ancho, alto, fondo, modo, r, g, b, grosor,
+                rotate);
+}
+
+void _mirilla::introduceCampana(float posX, float posY, float posZ, float radio,
+                                float alto, _modo modo, float r, float g,
+                                float b, float grosor, bool rotate) {
+  glPushMatrix();
+  glScalef(radio, radio, alto);
+  glTranslatef(posX, posY, posZ);
+  if (rotate) glRotatef(90, 1, 0, 0);
+  campana.draw(modo, r, g, b, grosor);
+  glPopMatrix();
+}
+
+void _mirilla::draw(_modo modo, float r, float g, float b, float grosor) {
+  float anchoMirilla = 0.05, altoMirilla = 1, fondoMirilla = anchoMirilla;
+
+  introduceMira(0, 0, 0, anchoMirilla, altoMirilla, fondoMirilla, modo, r, g, b,
+                grosor);
+
+  introduceMira(0, 0, 0, altoMirilla, anchoMirilla, fondoMirilla, modo, r, g, b,
+                true);
+
+  float radioMirilla = (altoMirilla / 2) + 0.1;
+  introduceCampana(0, 0, 0, radioMirilla, fondoMirilla, modo, r, g, b, grosor,
+                   true);
+
+  introduceBase(0, -1.83*radioMirilla, 0, anchoMirilla, altoMirilla, fondoMirilla, modo, r, g, b,
+                grosor);
+
+  float radioModR = fondoMirilla;
+  introduceModRotatorio(0, -16,0,radioModR*2,anchoMirilla*2,modo,r,g,b,grosor);
 }
 
 
 
-void _mirilla::introduceMira(float posX, float posY, float posZ, float ancho, float alto,
-                 float fondo, _modo modo, float r, float g, float b,
-                 float grosor, bool rotate){
 
+void _mirilla::introduceModRotatorio(float posX, float posY, float posZ, float radio,
+                       float alto, _modo modo, float r, float g, float b,
+                       float grosor, bool rotate ){
 
+   glPushMatrix();
+  glScalef(radio, radio, alto);
+  glTranslatef(posX, posY, posZ);
+  if (rotate) glRotatef(90, 0, 0, 1);
+  modRot.draw(modo, r, g, b, grosor);
+  glPopMatrix();
 
 }
-
 //************************************************************************
 // sustentación
 //************************************************************************
@@ -1192,7 +1243,7 @@ void _sustentacionAmetralladora::draw(_modo modo, float r, float g, float b,
 
   float transYPalo = (alturaPalo / 2.0 + 0.5) * alto;
 
-  // //palo base
+  // //palo base4A
   glPushMatrix();
   glTranslatef(0, transYPalo, 0);  //+0.5 para q empiece encima de la base
   glScalef(scaleAncho, alturaPalo * alto, scaleFondo);
@@ -1215,9 +1266,9 @@ _ametralladora::_ametralladora() {
   giro_base_up_max = 45;
   giro_base_up_min = -45;
 
-  giro_pala = 0.0;
-  giro_pala_max = 50.0;
-  giro_pala_min = -90.0;
+  giro_mirilla = 0.0;
+  giro_mirilla_max = 0.0;
+  giro_mirilla_min = -90.0;
 
   tamanio_pala = 0.15;
 };
@@ -1236,17 +1287,25 @@ void _ametralladora::draw(_modo modo, float r, float g, float b, float grosor) {
 
   glRotatef(giro_base, 1, 0, 0);
   glRotatef(giro_base_up, 0, 1, 0);
-  housing.draw(modo, r, g, b, grosor);
+  housing.draw(modo, r, g, b, grosor,giro_mirilla);
 
   // glScalef(1, 1, 0.7);
   glTranslatef(0, 0, 3.1);
   glRotatef(giro_canion, 0, 0, 1);
+
   canon.draw(modo, r, g, b, grosor);
+
+
+  
 
   glPopMatrix();
 
-  // glPushMatrix();
-  // canon.draw(modo, r, g, b, grosor);
+
+  //  glPushMatrix();
+
+  // glRotatef(giro_base, 1, 0, 0);
+  // glRotatef(giro_base_up, 0, 1, 0);
+  // housing.draw(modo, r, g, b, grosor,giro_mirilla);
 
   // glPopMatrix();
 };
