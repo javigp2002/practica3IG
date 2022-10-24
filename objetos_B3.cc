@@ -1245,8 +1245,8 @@ void _sustentacionAmetralladora::draw(_modo modo, float r, float g, float b,
 
   // //palo base4A
   glPushMatrix();
-  glTranslatef(0, transYPalo, 0);  //+0.5 para q empiece encima de la base
-  glScalef(scaleAncho, alturaPalo * alto, scaleFondo);
+  glTranslatef(0, transYPalo*2, 0);  //+0.5 para q empiece encima de la base
+  glScalef(scaleAncho/2.0, alturaPalo * alto*2, scaleFondo/2.0);
   baseAtras.draw(modo, r, g, b, grosor);
   glPopMatrix();
 };
@@ -1260,11 +1260,11 @@ _ametralladora::_ametralladora() {
   giro_base = 0.0;
   giro_base_up = 0.0;
 
-  giro_base_max = 20;
-  giro_base_min = -20;
+  giro_base_max = 90;
+  giro_base_min = -90;
 
-  giro_base_up_max = 45;
-  giro_base_up_min = -45;
+  giro_base_up_max = 30;
+  giro_base_up_min = -30;
 
   giro_mirilla = 0.0;
   giro_mirilla_max = 0.0;
@@ -1277,7 +1277,7 @@ void _ametralladora::draw(_modo modo, float r, float g, float b, float grosor) {
   glPushMatrix();
   float ajusteScale = 0.5;
   glScalef(ajusteScale, ajusteScale, ajusteScale);
-  glTranslatef(0, -4, 0);
+  glTranslatef(0, -7.6, 0);
 
   sustentacion.draw(modo, r, g, b, grosor);
 
@@ -1285,9 +1285,13 @@ void _ametralladora::draw(_modo modo, float r, float g, float b, float grosor) {
 
   glPushMatrix();
 
-  glRotatef(giro_base, 1, 0, 0);
-  glRotatef(giro_base_up, 0, 1, 0);
-  housing.draw(modo, r, g, b, grosor,giro_mirilla);
+  // float rotacionX = (giro_base_up_max - giro_base_up) / giro_base_up_max;
+  // float rotacionY = 1 - rotacionX;
+
+  glRotatef(giro_base_up, 1, 0, 0);
+  glRotatef(giro_base, 0, 1, 0);
+  cout << giro_base << endl;
+  housing.draw(modo, r, g, b, grosor, giro_mirilla);
 
   // glScalef(1, 1, 0.7);
   glTranslatef(0, 0, 3.1);

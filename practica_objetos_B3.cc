@@ -351,7 +351,7 @@ void special_key(int Tecla1, int x, int y) {
     case GLUT_KEY_F6:
       ametralladora.giro_base_up -= 1;
       if (ametralladora.giro_base_up < ametralladora.giro_base_up_min)
-        ametralladora.giro_base_up = ametralladora.giro_base_min;
+        ametralladora.giro_base_up = ametralladora.giro_base_up_min;
       break;
     case GLUT_KEY_F7:
       ametralladora.giro_mirilla += 1;
