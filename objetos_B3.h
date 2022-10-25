@@ -293,7 +293,7 @@ class _canon : public _triangulos3D {
   _canon();
 
   void draw(_modo modo, float r, float g, float b, float grosor);
-  void introduceSmallCanon(float posX, float posY, float posZ, _modo modo,
+  void introduceSmallCanon(float posX, float posY, float posZ, _modo modo, float radio,float alto,
                            float r, float g, float b, float grosor);
   void introduceEmbellecedor(float posX, float posY, float posZ, float radio,
                              float alto, _modo modo, float r, float g, float b,
