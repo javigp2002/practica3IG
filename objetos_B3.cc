@@ -970,7 +970,7 @@ _housing::_housing() {
 
 void _housing::draw(_modo modo, float r, float g, float b, float grosor,
                     float giro_mira) {
-  // Todos estos vienen "heredados del cañon"
+  // // Todos estos vienen "heredados del cañon"
 
   float altoEmbCanion = alto / 48;
   float radioEmbCanion = radio / 3;
@@ -1040,25 +1040,28 @@ void _housing::draw(_modo modo, float r, float g, float b, float grosor,
   modo, r, g, b, grosor);
  
   // base mango
-  float altoBaseMango = alto / 24;
+  float altoBaseMango = alto / 20;
   float fondoBaseMango = alto/5;
   float transXBaseMango = 0;
   float anchoBaseMango = 1.5*(radioB*2*RADIOCILINDRO);
-  float transYBaseMango = (radioB*RADIOCILINDRO)+altoBaseMango/2; // el cubo tiene tam 1 por def
+  float transYBaseMango = (radioB*RADIOCILINDRO)+altoBaseMango/2 - 0.02; // el cubo tiene tam 1 por def
   float transZBaseMango = (altoB*ALTURACILINDRO)/2- fondoBaseMango;
   
   introduceEmbellecedor(transXBaseMango, transYBaseMango, transZBaseMango, anchoBaseMango, altoBaseMango,fondoBaseMango,
   modo, r, g, b, grosor);
 
   // partes mango
-   float transYMira = transYBaseMango + altoBaseMango/2 ;
+   float transYMira = transYBaseMango + altoBaseMango/2 + 0.02 ; // 0.5 del alto mirilla
    float transZMira = transZBaseMango ; // arreglar aqui la mira q funcione bn
 
+  float transYMirilla = 1; // alto mirilla
+  float escala = 0.5;
   glPushMatrix();
 
   glTranslatef(0,transYMira,transZMira); //pos final
-  glRotatef(giro_mira,1,0,0); // rotacion
-  glTranslatef(0,1.6,0); // mover punto del medio
+  glScalef(escala, escala, escala);
+  glRotatef(giro_mira, 1, 0, 0);    // rotacion
+  glTranslatef(0, transYMirilla,0); // mover punto del medio
   mira.draw(modo, r, g, b, grosor);
   glPopMatrix();
 }
@@ -1117,8 +1120,8 @@ void _mirilla::introduceMira(float posX, float posY, float posZ, float ancho,
                              float alto, float fondo, _modo modo, float r,
                              float g, float b, float grosor, bool rotate) {
   glPushMatrix();
-  glScalef(ancho, alto, fondo);
   glTranslatef(posX, posY, posZ);  // transladar de manera que quede bien
+  glScalef(ancho, alto, fondo);
   if (rotate) glRotatef(90, 1, 0, 0);
   mira.draw(modo, r, g, b, grosor);
   glPopMatrix();
@@ -1135,32 +1138,36 @@ void _mirilla::introduceCampana(float posX, float posY, float posZ, float radio,
                                 float alto, _modo modo, float r, float g,
                                 float b, float grosor, bool rotate) {
   glPushMatrix();
-  glScalef(radio, radio, alto);
   glTranslatef(posX, posY, posZ);
+  glScalef(radio, radio, alto);
   if (rotate) glRotatef(90, 1, 0, 0);
   campana.draw(modo, r, g, b, grosor);
   glPopMatrix();
 }
 
 void _mirilla::draw(_modo modo, float r, float g, float b, float grosor) {
-  float anchoMirilla = 0.05, altoMirilla = 1, fondoMirilla = anchoMirilla;
+  float anchoMirilla = 0.02, altoMirilla = 1, fondoMirilla = anchoMirilla;
 
   introduceMira(0, 0, 0, anchoMirilla, altoMirilla, fondoMirilla, modo, r, g, b,
-                grosor);
+                grosor,false);
 
   introduceMira(0, 0, 0, altoMirilla, anchoMirilla, fondoMirilla, modo, r, g, b,
-                true);
+                false);
 
-  float radioMirilla = (altoMirilla / 2) + 0.1;
+  float radioMirilla = (altoMirilla / 2) /RADIOCILINDRO;
   introduceCampana(0, 0, 0, radioMirilla, fondoMirilla, modo, r, g, b, grosor,
                    true);
 
-  introduceBase(0, -1.83 * radioMirilla, 0, anchoMirilla, altoMirilla,
-                fondoMirilla, modo, r, g, b, grosor);
+  float altoBase = altoMirilla / 2;
+  float transYBase = -altoMirilla / 2 - altoBase / 2;
+  introduceBase(0, transYBase, 0, anchoMirilla * 2, altoBase, 2*fondoMirilla,
+                modo, r, g, b, grosor, false);
 
+  float altoModR = anchoMirilla * 2;
   float radioModR = fondoMirilla;
-  introduceModRotatorio(0, -16, 0, radioModR * 2, anchoMirilla * 2, modo, r, g,
-                        b, grosor);
+  float transYModR = transYBase - (altoBase)/2;
+  introduceModRotatorio(0, transYModR, 0, radioModR * 2, altoModR, modo,
+                        r, g, b, grosor,true);
 }
 
 void _mirilla::introduceModRotatorio(float posX, float posY, float posZ,
@@ -1168,11 +1175,13 @@ void _mirilla::introduceModRotatorio(float posX, float posY, float posZ,
                                      float r, float g, float b, float grosor,
                                      bool rotate) {
   glPushMatrix();
+  glTranslatef(posX, posY, posZ);  // transladar de manera que quede bien
   glScalef(radio, radio, alto);
-  glTranslatef(posX, posY, posZ);
-  if (rotate) glRotatef(90, 0, 0, 1);
+  if (rotate)glRotatef(90, 1, 0, 0);
+    if (rotate)glRotatef(90, 0, 0, 1);
   modRot.draw(modo, r, g, b, grosor);
   glPopMatrix();
+
 }
 //************************************************************************
 // sustentación
