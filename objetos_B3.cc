@@ -1305,32 +1305,30 @@ _ametralladora::_ametralladora() {
 };
 
 void _ametralladora::draw(_modo modo, float r, float g, float b, float grosor) {
-  // glPushMatrix();
-  // float ajusteScale = 0.5;
-  // glScalef(ajusteScale, ajusteScale, ajusteScale);
-  // glTranslatef(0, -7.6, 0);
+  glPushMatrix();
+  float ajusteScale = 0.5;
+  glScalef(ajusteScale, ajusteScale, ajusteScale);
+  glTranslatef(0, -7.6, 0);
 
-  // sustentacion.draw(modo, r, g, b, grosor);
+  sustentacion.draw(modo, r, g, b, grosor);
 
-  // glPopMatrix();
+  glPopMatrix();
 
-  // glPushMatrix();
+  glPushMatrix();
 
-  // // float rotacionX = (giro_base_up_max - giro_base_up) / giro_base_up_max;
-  // // float rotacionY = 1 - rotacionX;
+  // float rotacionX = (giro_base_up_max - giro_base_up) / giro_base_up_max;
+  // float rotacionY = 1 - rotacionX;
 
-  // glRotatef(giro_base_up, 1, 0, 0);
-  // glRotatef(giro_base, 0, 1, 0);
-  // cout << giro_base << endl;
-  // housing.draw(modo, r, g, b, grosor, giro_mirilla);
+  glRotatef(giro_base_up, 1, 0, 0);
+  glRotatef(giro_base, 0, 1, 0);
+  housing.draw(modo, r, g, b, grosor, giro_mirilla);
 
-  // // glScalef(1, 1, 0.7);
-  // glTranslatef(0, 0, 3.1);
-  // glRotatef(giro_canion, 0, 0, 1);
+  glTranslatef(0, 0, 3);
+  glRotatef(giro_canion, 0, 0, 1);
 
-  // canon.draw(modo, r, g, b, grosor);
+  canon.draw(modo, r, g, b, grosor);
 
-  // glPopMatrix();
+  glPopMatrix();
 
   // glPushMatrix();
 
