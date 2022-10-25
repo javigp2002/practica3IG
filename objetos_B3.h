@@ -104,11 +104,11 @@ class _extrusion : public _triangulos3D {
 // clase Cilindro
 //*************************************************************************
 static int ALTURACILINDRO = 3;
-static int RADIOCILINDRO = 1;
+static int RADIOCILINDRO = 3;
 
 class _cilindro : public _rotacion {
  public:
-  _cilindro(float radio = ALTURACILINDRO, float altura = ALTURACILINDRO,
+  _cilindro(float radio = RADIOCILINDRO, float altura = ALTURACILINDRO,
             int num = 20, int tapa_in = 1, int tapa_su = 1);
 };
 
@@ -117,7 +117,9 @@ class _cilindro : public _rotacion {
 //*************************************************************************
 
 class _cono : public _rotacion {
+ 
  public:
+  
   _cono(float radio = 2, float altura = 3, int num = 10);
 };
 
