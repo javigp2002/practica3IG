@@ -316,6 +316,34 @@ float an = 1;
   _cilindro cilindro, canonSmall, rotationModule, embellecedor;
 };
 
+
+
+// cargador
+//************************************************************************
+
+class _cargador : public _triangulos3D {
+ public:
+  _cargador();
+
+  void draw(_modo modo, float r, float g, float b, float grosor);
+  void introduceEmbellecedor(float posX, float posY, float posZ, float ancho,
+                             float alto, float fondo, _modo modo, float r,
+                             float g, float b, float grosor);
+
+  float ancho;
+  float alto;
+  float fondo;
+  float radio;
+
+float an = 1;
+  float al = 1.5;
+  float f = 1;
+  float r = 0.45;
+ protected:
+  _cubo cubo;
+};
+
+
 //************************************************************************
 // housing
 //************************************************************************
@@ -349,6 +377,7 @@ float an = 1;
   _cono cono;
   _cubo cubo;
   _mirilla mira;
+  _cargador cargador;
 };
 
 
@@ -405,4 +434,5 @@ class _ametralladora : public _triangulos3D {
   _sustentacionAmetralladora sustentacion;
   _housing housing;
   _mirilla mira;
+  _cargador cargador;
 };

@@ -55,6 +55,9 @@ _ametralladora ametralladora;
 
 // _objeto_ply *ply;
 
+// boolean
+
+bool hay_animacion = false;
 //**************************************************************************
 //
 //***************************************************************************
@@ -188,6 +191,70 @@ void change_window_size(int Ancho1, int Alto1) {
   glutPostRedisplay();
 }
 
+bool estoyDeVuelta = false;
+bool estoyDeVuelta2 = false;
+int vueltasCanon = 500;
+void animacionAmetralladora() {
+  if (hay_animacion) {
+    if (!estoyDeVuelta && !estoyDeVuelta2) {
+      if (ametralladora.giro_base < 45)
+        ametralladora.giro_base++;
+      else if (ametralladora.giro_mirilla < ametralladora.giro_mirilla_max)
+        ametralladora.giro_mirilla++;
+      else if (ametralladora.giro_base_up > ametralladora.giro_base_up_min)
+        ametralladora.giro_base_up--;
+      else if (ametralladora.giro_canion < vueltasCanon)
+        ametralladora.giro_canion += 5;
+      else {
+        estoyDeVuelta = true;
+      }
+
+    } else if (estoyDeVuelta && !estoyDeVuelta2) {
+      if (ametralladora.giro_canion < vueltasCanon*2)
+        ametralladora.giro_canion += 5;
+      else if (ametralladora.giro_base_up < 0)
+        ametralladora.giro_base_up++;
+      else if (ametralladora.giro_mirilla > ametralladora.giro_mirilla_min)
+        ametralladora.giro_mirilla--;
+      else if (ametralladora.giro_base > 0)
+        ametralladora.giro_base--;
+      else {
+        estoyDeVuelta = false;
+        estoyDeVuelta2 = true;
+      }
+    } else if (!estoyDeVuelta && estoyDeVuelta2) {
+      if (ametralladora.giro_base > -45)
+        ametralladora.giro_base--;
+      else if (ametralladora.giro_mirilla < ametralladora.giro_mirilla_max)
+        ametralladora.giro_mirilla++;
+      else if (ametralladora.giro_base_up < ametralladora.giro_base_up_max)
+        ametralladora.giro_base_up++;
+      else if (ametralladora.giro_canion < vueltasCanon*3)
+        ametralladora.giro_canion += 5;
+      else {
+        estoyDeVuelta = true;
+      }
+    } else {
+      if (ametralladora.giro_canion < vueltasCanon*4)
+        ametralladora.giro_canion += 5;
+      else if (ametralladora.giro_base_up > 0)
+        ametralladora.giro_base_up--;
+      else if (ametralladora.giro_mirilla > ametralladora.giro_mirilla_min)
+        ametralladora.giro_mirilla--;
+      else if (ametralladora.giro_base < 0)
+        ametralladora.giro_base++;
+      else {
+        estoyDeVuelta = false;
+        estoyDeVuelta2 = false;
+        ametralladora.giro_canion = 0;
+      }
+    }
+
+
+    glutPostRedisplay();
+  }
+}
+
 //***************************************************************************
 // Funcion llamada cuando se aprieta una tecla normal
 //
@@ -251,6 +318,13 @@ void normal_key(unsigned char Tecla1, int x, int y) {
 
     case 'A':
       t_objeto = AMETRALLADORA;
+      break;
+
+    case 'S':
+      if (hay_animacion)
+        hay_animacion = false;
+      else
+        hay_animacion = true;
       break;
   }
   glutPostRedisplay();
@@ -489,6 +563,8 @@ int main(int argc, char *argv[]) {
   // codigo ejemplo para el objeto ply creado
   rotacionPLY.parametros_PLY(argv[2], 10);
 
+  // inicio animacion
+  glutIdleFunc(animacionAmetralladora);
   // inicio del bucle de eventos
   glutMainLoop();
   return 0;
