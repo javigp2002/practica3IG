@@ -851,7 +851,13 @@ _canon::_canon() {
   radio = r;
   alto = al;
 
-  colors_chess(1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
+    cilindro = _cilindro(RADIOCILINDRO, ALTURACILINDRO, 20, 0, 0);
+  canonSmall = _cilindro(RADIOCILINDRO, ALTURACILINDRO, 20, 0, 0);
+
+  cilindro.colors_chess(0.35, 0.35, 0.35, 0.45, 0.45, 0.45);
+  canonSmall.colors_chess(0.35, 0.35, 0.35, 0.45, 0.45, 0.45);
+  rotationModule.colors_chess(0.15, 0.15, 0.15, 0.1, 0.1, 0.1);
+  embellecedor.colors_chess(0.15, 0.15, 0.15, 0.1, 0.1, 0.1);
 }
 
 void _canon::draw(_modo modo, float r, float g, float b, float grosor) {
@@ -868,7 +874,6 @@ void _canon::draw(_modo modo, float r, float g, float b, float grosor) {
   glTranslatef(0, 0, transZCanonGrande);
   glScalef(radio_medium, radio_medium, altoCilindros);
   glRotatef(90, 1, 0, 0);
-  cilindro = _cilindro(RADIOCILINDRO, ALTURACILINDRO, 20, 0, 0);
   cilindro.draw(modo, r, g, b, grosor);
   glPopMatrix();
 
@@ -934,7 +939,7 @@ void _canon::introduceSmallCanon(float posX, float posY, float posZ, _modo modo,
   glTranslatef(posX, posY, posZ);
   glScalef(radio, radio, alto);
   glRotatef(90, 1, 0, 0);
-  canonSmall = _cilindro(RADIOCILINDRO, ALTURACILINDRO, 20, 0, 0);
+
   canonSmall.draw(modo, r, g, b, grosor);
   glPopMatrix();
 }
@@ -974,7 +979,8 @@ _cargador::_cargador() {
   radio = 0.45;
   alto = 1.5;
 
-  colors_chess(1.0, 1.0, 0.0, 0.0, 0.0, 1.0);
+  // cubo.colors_chess(0.55, 0.55, 0.55, 0.5, 0.5, 0.5);
+  cubo.colors_chess(0.18, 0.26, 0.13, 0.2, 0.1, 0.11);
 }
 
 void _cargador::draw(_modo modo, float r, float g, float b, float grosor) {
@@ -1028,7 +1034,15 @@ _housing::_housing() {
   radio = 0.45;
   alto = 1.5;
 
-  colors_chess(1.0, 1.0, 0.0, 0.0, 0.0, 1.0);
+  // cilindro.colors_chess(0.35, 0.35, 0.35, 0.3, 0.3, 0.3);
+  // cubo.colors_chess(0.35, 0.35, 0.35, 0.3, 0.3, 0.3);
+  // cono.colors_chess(0.35, 0.35, 0.35, 0.3, 0.3, 0.3);
+
+  
+
+  cilindro.colors_chess(0.18, 0.26, 0.13, 0.2, 0.1, 0.11);
+  cubo.colors_chess(0.18, 0.26, 0.13, 0.2, 0.1, 0.11);
+  cono.colors_chess(0.18, 0.26, 0.13, 0.2, 0.1, 0.11);
 }
 
 void _housing::draw(_modo modo, float r, float g, float b, float grosor,
@@ -1194,6 +1208,10 @@ _mirilla::_mirilla() {
 
   campana = _cilindro(RADIOCILINDRO, ALTURACILINDRO, 30, 0, 0);
   modRot = _cilindro(RADIOCILINDRO, ALTURACILINDRO, 30, 1, 1);
+
+  campana.colors_chess(0.7, 0.7, 0.7, 0.6, 0.6, 0.6);
+  modRot.colors_chess(0.5, 0.5, 0.5, 0.6, 0.6, 0.6);
+  mira.colors_chess(0.3, 0.3, 0.3, 0.4, 0.4, 0.4);
 }
 
 void _mirilla::introduceMira(float posX, float posY, float posZ, float ancho,
@@ -1270,6 +1288,14 @@ _sustentacionAmetralladora::_sustentacionAmetralladora() {
   ancho = 1;
   alto = 0.2;
   fondo = 1;
+
+  base.colors_chess(0.18, 0.26, 0.13, 0.2, 0.1, 0.11);
+  pataIzda.colors_chess(0.18, 0.26, 0.13, 0.2, 0.1, 0.11);
+  pataDcha.colors_chess(0.18, 0.26, 0.13, 0.2, 0.1, 0.11);
+  pataAtras.colors_chess(0.18, 0.26, 0.13, 0.2, 0.1, 0.11);
+  baseIzda.colors_chess(0.18, 0.26, 0.13, 0.2, 0.1, 0.11);
+  baseAtras.colors_chess(0.18, 0.26, 0.13, 0.2, 0.1, 0.11);
+  paloBase.colors_chess(0.18, 0.26, 0.13, 0.2, 0.1, 0.11);
 };
 
 void _sustentacionAmetralladora::draw(_modo modo, float r, float g, float b,
@@ -1331,7 +1357,7 @@ void _sustentacionAmetralladora::draw(_modo modo, float r, float g, float b,
   float anchuraPalo = 0.7;
   float scaleAncho = anchuraPalo * ancho, scaleFondo = anchuraPalo * fondo;
 
-  float transYPalo = (alturaPalo / 2.0 + 0.5) * alto;
+  float transYPalo = (alturaPalo / 2.0 ) * alto;
 
   // //palo base4A
   glPushMatrix();
@@ -1367,37 +1393,37 @@ _ametralladora::_ametralladora() {
 };
 
 void _ametralladora::draw(_modo modo, float r, float g, float b, float grosor) {
-  // glPushMatrix();
-  // float ajusteScale = 0.5;
-  // glScalef(ajusteScale, ajusteScale, ajusteScale);
-  // glTranslatef(0, -7.6, 0);
+  glPushMatrix();
+  float ajusteScale = 0.5;
+  glScalef(ajusteScale, ajusteScale, ajusteScale);
+  glTranslatef(0, -7.1, 0);
 
-  // sustentacion.draw(modo, r, g, b, grosor);
+  sustentacion.draw(modo, r, g, b, grosor);
 
-  // glPopMatrix();
-
-  // glPushMatrix();
-
-  // float rotacionX = (giro_base_max - abs(giro_base)) / giro_base_max;
-  // float rotacionZ = 1 - rotacionX;
-
-  // if (giro_base > 0) rotacionZ *= -1;
-  // glRotatef(giro_base_up, rotacionX, 0, rotacionZ);
-  // glRotatef(giro_base, 0, 1, 0);
-  // housing.draw(modo, r, g, b, grosor, giro_mirilla);
-
-  // glTranslatef(0, 0, 3);
-  // glRotatef(giro_canion, 0, 0, 1);
-
-  // canon.draw(modo, r, g, b, grosor);
-
-  // glPopMatrix();
+  glPopMatrix();
 
   glPushMatrix();
 
-  // glRotatef(giro_base, 1, 0, 0);
-  // glRotatef(giro_base_up, 0, 1, 0);
+  float rotacionX = (giro_base_max - abs(giro_base)) / giro_base_max;
+  float rotacionZ = 1 - rotacionX;
+
+  if (giro_base > 0) rotacionZ *= -1;
+  glRotatef(giro_base_up, rotacionX, 0, rotacionZ);
+  glRotatef(giro_base, 0, 1, 0);
+  housing.draw(modo, r, g, b, grosor, giro_mirilla);
+
+  glTranslatef(0, 0, 3);
+  glRotatef(giro_canion, 0, 0, 1);
+
   canon.draw(modo, r, g, b, grosor);
 
   glPopMatrix();
+
+  // glPushMatrix();
+
+  // // glRotatef(giro_base, 1, 0, 0);
+  // // glRotatef(giro_base_up, 0, 1, 0);
+  // housing.draw(modo, r, g, b, grosor);
+
+  // glPopMatrix();
 };
