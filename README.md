@@ -10,5 +10,9 @@ Para mostrarla pulsaremos 'A'
 - F6: Girar ametralladora hacia arriba
 - F7: Subir mirilla
 - F8: Bajar mirilla
+<<<<<<< HEAD
 - S: Animación
 
+=======
+- S: Animación
+>>>>>>> 3c4a36a (Terminado)
